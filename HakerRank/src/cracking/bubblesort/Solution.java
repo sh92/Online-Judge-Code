@@ -1,4 +1,4 @@
-package com.bubblesort;
+package cracking.bubblesort;
 
 import java.util.Scanner;
 

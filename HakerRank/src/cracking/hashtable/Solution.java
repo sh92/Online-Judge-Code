@@ -1,4 +1,4 @@
-package hashtable;
+package cracking.hashtable;
 
 import java.util.Hashtable;
 import java.util.Scanner;

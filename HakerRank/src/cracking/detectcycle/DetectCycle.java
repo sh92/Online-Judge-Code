@@ -1,4 +1,4 @@
-package com.detectcycle;
+package cracking.detectcycle;
 
 import java.util.ArrayList;
 import java.util.List;

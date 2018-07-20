@@ -1,4 +1,4 @@
-package com.bubblesort;
+package cracking.bubblesort;
 
 public class BubbleSort {
 
