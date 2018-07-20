@@ -1,4 +1,4 @@
-package com.hackerank;
+package com.bubblesort;
 
 import java.util.Scanner;
 

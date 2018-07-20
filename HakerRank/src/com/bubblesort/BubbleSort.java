@@ -1,4 +1,4 @@
-package com.hackerank;
+package com.bubblesort;
 
 public class BubbleSort {
 
