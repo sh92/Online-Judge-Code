@@ -14,7 +14,6 @@ public class Solution {
 					return;
 				}
 				hasntable.put(cost[i], i);
-
 			}
 		}
 	}
