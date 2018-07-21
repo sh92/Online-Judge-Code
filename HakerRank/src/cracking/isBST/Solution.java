@@ -1,6 +1,5 @@
-package isBalencedTree;
+package cracking.isBST;
 
-import java.util.HashSet;
 import java.util.Set;
 
 class Node {
@@ -17,15 +16,33 @@ class Node {
 public class Solution {
 
 	public static boolean checkBST(Node root) {
-		Set<Integer> myset = new HashSet<Integer>();
-		return isBST(root, myset);
+		// Set<Integer> myset = new HashSet<Integer>();
+		// return isBST2(root, myset);
+
+		return isBST(root, -1, -1);
 	}
 
-	private static boolean isBST(Node root, Set<Integer> myset) {
+	private static boolean isBST(Node root, int l, int h) {
 		if (root == null) {
 			return true;
 		}
-		if (myset.contains(root.data)) {
+
+		if (l >= 0 && root.data <= l) {
+			return false;
+		}
+
+		if (h >= 0 && root.data >= h) {
+			return false;
+		}
+
+		return (isBST(root.left, l, root.data) && isBST(root.right, root.data, h));
+	}
+
+	private static boolean isBST2(Node root, Set<Integer> myset) {
+		if (root == null) {
+			return true;
+		}
+		if (myset.contains(root.data) || root.data < 0) {
 			return false;
 		} else {
 			myset.add(root.data);
@@ -33,17 +50,17 @@ public class Solution {
 
 		boolean isLeftBST = true, isRightBST = true;
 		if (root.left != null) {
-			if (root.left.data > root.data) {
+			if (root.left.data > root.data || root.left.data < 0) {
 				return false;
 			}
-			isLeftBST = isBST(root.left, myset);
+			isLeftBST = isBST2(root.left, myset);
 		}
 
 		if (root.right != null) {
-			if (root.right.data < root.data) {
+			if (root.right.data < root.data || root.right.data < 0) {
 				return false;
 			}
-			isRightBST = isBST(root.right, myset);
+			isRightBST = isBST2(root.right, myset);
 		}
 
 		return isLeftBST && isRightBST;
