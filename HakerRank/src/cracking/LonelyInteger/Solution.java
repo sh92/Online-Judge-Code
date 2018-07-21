@@ -1,4 +1,4 @@
-package LonelyInteger;
+package cracking.LonelyInteger;
 
 import static java.util.stream.Collectors.toList;
 

@@ -1,4 +1,4 @@
-package cracking.hashtable;
+package cracking.hashtable.checkMagazine;
 
 import java.util.Hashtable;
 import java.util.Scanner;

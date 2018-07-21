@@ -8,16 +8,16 @@ import java.util.Scanner;
 public class solution {
 	static String primality(int n) {
 		if (n <= 1)
-			return "Not pirme";
+			return "Not prime";
 		if (n == 2)
-			return "Pirme";
+			return "Prime";
 
 		for (int i = 2; i <= Math.sqrt(n) + 1; i++) {
 			if (n % i == 0) {
-				return "Not pirme";
+				return "Not prime";
 			}
 		}
-		return "Pirme";
+		return "Prime";
 
 	}
 
