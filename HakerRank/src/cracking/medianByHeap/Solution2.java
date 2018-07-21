@@ -7,9 +7,7 @@ import java.util.Scanner;
 public class Solution2 {
 
 	private static final Scanner scanner = new Scanner(System.in);
-	private static PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder()); // keeps track of
-																										// the SMALL
-																										// numbers
+	private static PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
 	private static PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 
 	public static void main(String[] args) {

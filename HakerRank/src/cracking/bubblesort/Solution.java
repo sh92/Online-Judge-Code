@@ -10,7 +10,7 @@ public class Solution {
 		a[y] = temp;
 	}
 
-	public static int sort(int[] a) {
+	public static int countSwaps(int[] a) {
 
 		int numberOfSwaps = 0;
 		int n = a.length;
@@ -37,7 +37,7 @@ public class Solution {
 		for (int a_i = 0; a_i < n; a_i++) {
 			a[a_i] = in.nextInt();
 		}
-		int numofSwaps = sort(a);
+		int numofSwaps = countSwaps(a);
 		System.out.println("Array is sorted in " + numofSwaps + " swaps.");
 		System.out.println("First Element: " + a[0]);
 		System.out.println("Last Element: " + a[n - 1]);
