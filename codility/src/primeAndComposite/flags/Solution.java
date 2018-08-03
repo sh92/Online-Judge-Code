@@ -3,6 +3,7 @@ package primeAndComposite.flags;
 import java.util.ArrayList;
 
 public class Solution {
+
 	public static int solution(int[] A) {
 		ArrayList<Integer> peeks = new ArrayList<Integer>();
 		for (int i = 1; i < A.length - 1; i++) {
