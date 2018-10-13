@@ -1,0 +1,142 @@
+
+175. Combine Join
+select p.FirstName, p.LastName, a.City, a.State from Address as a right join Person as p on p.PersonId = a.PersonId
+
+?. SecondHighest 
+select MAX(salary) as SecondHighestSalary from Employee where not in (select MAX(Salary) from Employee)
+
+177. Nth Highest
+CREATE FUNCTIon getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+  SET N=N-1;
+  RETURN (
+      # Write your MySQL query statement below.
+      select distinct Salary from Employee order by Salary desc limit 1 offset N
+  );
+END
+
+178. Rank Score
+select Score, (select count(*) from (select distinct Score s from Scores) tmp where s>= Score) Rank from scores oder by Score desc
+
+180. Consecutive Numbers
+Select distinct(l1.Num) as ConsecutiveNums from Logs l1, Logs l2, Logs l3 where l2.Id=l1.Id+1 and l3.Id=l2.Id+1 and l1.Num=l2.Num and l1.Num=l3.Num
+
+
+181. Salary higher than Manager
+select e.Name as Employee from Employee e, Employee m where e.ManagerId = m.Id and e.Salary > m.Salary
+
+183. Customers Who Never Order
+select Name as Customers from  Customers as c where Id not in (select CustomerId from Orders) 
+
+184. Department Highest Salary
+select d.Name as Department, e.Name as Employee, e.Salary as Salary 
+from Employee as e join Department as d on e.DepartmentId =  d.Id and e.Salary = (select Max(Salary) from Employee where DepartmentId = d.Id)
+
+185. Department Top Three Salaries
+
+ select 
+ k.DNAME as Department,
+ k.ENAME as Employee,
+ k.Salary as Salary
+ from
+ (
+ select
+ @rn:=CASE
+    WHEN @Salary=t.Salary THEN @rn
+    WHEN  @did = t.DID THEN @rn + 1
+    ELSE 1
+ END AS row,
+ @did := t.DID as DepartmentId,
+ t.DNAME as DNAME,
+ t.ENAME as ENAME,
+ @Salary:=t.Salary as Salary
+ from
+ (select 
+ e.Name as EName,
+ e.DepartmentId as DID,
+ d.Name as DNAME,
+ e.Salary as Salary
+ from Employee e join Department d 
+    on e.DepartmentId = d.Id
+  order by e.DepartmentId, e.Salary desc 
+ ) t, 
+ (select @Salary:=0, @did:=0, @rn:=0) r
+ ) k
+  where row < 4
+
+196. Delete duplecate email
+
+
+delete from Person
+where id not in 
+(
+    select MIN(Id) from 
+    (
+        select * from Person 
+    ) t 
+    group By Email
+) 
+
+delete p1 from Person p1, Person p2 
+where p1.Email = p2.Email and p1.Id > p2.Id
+
+
+delete from Person
+where Id not in
+(
+select * from (
+select Min(p1.Id) from Person p1
+    group By p1.Email
+) t
+)
+
+197. Rising Temperature
+select t1.Id from 
+(select * from Weather order by RecordDate asc) t1 ,
+(select * from Weather order by RecordDate asc) t2 
+where DATEDIFF(t1.RecordDate,t2.RecordDate)=1 and t1.Temperature > t2.Temperature
+
+596. Classes More Than 5 Students
+select class
+from courses
+group by class Having count(distinct(student)) >= 5
+
+select class
+from 
+( 
+    select count(distinct(student)) as c, class 
+    from courses group by class
+) t where t.c >=5
+
+620. Not boring Movie
+select * from cinema where description != "boring" and id%2=1 order by rating desc
+
+626. Exchange Seat
+select least((id + (id%2)*2-1), (select count(*) from seat)) as id, student from seat order by id 
+
+select
+    s1.id, COALESCE(s2.student, s1.student) AS student
+from
+    seat s1
+        LEFT join
+    seat s2 on ((s1.id + 1) ^ 1) - 1 = s2.id
+order by s1.id
+
+select a.id, 
+case 
+    when b.student is null 
+        then a.student 
+    else b.student
+end as student
+from seat a left join seat b
+on a.id = case when a.id % 2 = 0 then b.id + 1 else b.id - 1 end
+order by a.id
+
+262.Trips and Users
+select Request_at as Day, ROUND(SUM(t.Status != "completed") / COUNT(*), 2) as "Cancellation Rate"
+    from Trips t 
+    join Users c on t.Client_ID = c.Users_ID and c.Banned = "No"
+    join Users d on t.Driver_ID = d.Users_ID and d.Banned = "No"
+    where Request_at between "2013-10-01" and "2013-10-03"
+    group by Request_at;
+
