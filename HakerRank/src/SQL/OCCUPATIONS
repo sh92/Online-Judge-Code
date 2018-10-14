@@ -1,0 +1,51 @@
+# SOLUTION 1
+
+SELECT 
+MIN(CASE WHEN Occupation = 'Doctor' THEN Name ELSE NULL END) AS Doctor,
+MIN(CASE WHEN Occupation = 'Professor' THEN Name ELSE NULL END) AS Professor,
+MIN(CASE WHEN Occupation = 'Singer' THEN Name ELSE NULL END) AS Singer,
+MIN(CASE WHEN Occupation = 'Actor' THEN Name ELSE NULL END) AS Actor
+FROM (
+  SELECT a.Occupation,
+         a.Name,
+         (SELECT COUNT(*) 
+            FROM Occupations AS b
+            WHERE a.Occupation = b.Occupation AND a.Name > b.Name) AS rank
+  FROM Occupations AS a
+) AS c
+GROUP BY c.rank;
+
+
+# SOLUTION 2
+
+set @dcnt = 0;
+set @pcnt = 0;
+set @scnt = 0;
+set @acnt = 0;
+
+
+select dname, pname, sname, aname
+from
+(select 
+ p.rn as rn, d.name as dname, p.name as pname
+from
+(
+    (select @dcnt:=@dcnt+1 as rn, name from occupations where lower(occupation)='doctor' order by name) as d
+    RIGHT JOIN
+    (select @pcnt:=@pcnt+1 as rn, name from occupations where lower(occupation)='professor' order by name) as p 
+    ON d.rn = p.rn
+) 
+) as t1
+ LEFT JOIN
+(
+select
+s.rn as rn, s.name as sname, a.name as aname
+from
+(
+    (select @scnt:=@scnt+1 as rn, name from occupations where lower(occupation)='singer' order by name ) as s
+    RIGHT JOIN
+    (select @acnt:=@acnt+1 as rn, name from occupations where lower(occupation)='actor' order by name ) as a
+    ON s.rn = a.rn
+) 
+) as t2
+ON t1.rn = t2.rn

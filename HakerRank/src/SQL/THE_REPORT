@@ -1,0 +1,23 @@
+select 
+CASE 
+WHEN t.grade < 8 THEN NULL
+ELSE t.name
+END as name,
+t.grade, 
+t.marks
+from 
+(select 
+CASE  
+WHEN MARKS between 90 and 100 THEN 10
+WHEN MARKS between 80 and 89 THEN 9
+WHEN MARKS between 70 and 79 THEN 8
+WHEN MARKS between 60 and 69 THEN 7
+WHEN MARKS between 50 and 59 THEN 6
+WHEN MARKS between 40 and 49 THEN 5
+WHEN MARKS between 30 and 39 THEN 4
+WHEN MARKS between 20 and 29 THEN 3
+WHEN MARKS between 10 and 19 THEN 2
+WHEN MARKS between 0 and 9 THEN 1
+END
+as grade, id, marks, name
+from Students ) t order by t.grade desc, t.name, t.marks asc

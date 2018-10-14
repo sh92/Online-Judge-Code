@@ -1,0 +1,24 @@
+set @dcnt:=0, @acnt:=0, @pcnt:=0, @scnt:=0;
+
+select t.job from (SELECT 
+CASE lower(Occupation)
+WHEN "doctor"
+THEN CONCAT(NAME,"(D)")
+WHEN "actor"
+THEN CONCAT(NAME,"(A)")
+WHEN "professor"
+THEN CONCAT(NAME,"(P)")
+WHEN "singer"
+THEN CONCAT(NAME,"(S)")
+ELSE NAME
+END as "job", NAME
+from OCCUPATIONS) t order by t.name;
+
+select 
+CASE lower(t2.Occupation)
+WHEN "doctor" THEN CONCAT("There are a total of ", t2.cnt," doctors.")
+WHEN "singer" THEN CONCAT("There are a total of ", t2.cnt," singers.")
+WHEN "actor" THEN CONCAT("There are a total of ", t2.cnt," actors.")
+WHEN "professor" THEN CONCAT("There are a total of ", t2.cnt," professors.")
+END as rcnt
+from (select count(*) as cnt, Occupation from Occupations group by Occupation ) t2 order by t2.cnt, t2.Occupation;
