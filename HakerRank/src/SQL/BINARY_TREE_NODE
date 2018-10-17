@@ -1,0 +1,14 @@
+#solution1
+
+select n, 
+if(p is null 'ROOT',
+IF((SELECT count(*) from BST where P=B.N)>0, 'Inner', 'LEAF')) FROM B ORDER BY N;
+
+SELECT BT.N,
+   CASE
+      WHEN BT.P IS NULL THEN 'ROOT'
+	  WHEN EXISTS (SELECT B.P FROM BST B WHERE B.P = BT.N) THEN 'Inner'
+	  ELSE 'LEAF'
+   END
+FROM BST AS BT
+ORDER BY BT.N;
