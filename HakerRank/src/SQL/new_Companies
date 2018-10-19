@@ -1,0 +1,6 @@
+select c.company_code, c.founder, 
+(select count(distinct lm.lead_manager_code) from Lead_Manager as lm where lm.company_code=c.company_code group by lm.company_code ) LMCNT, 
+(select count(distinct sm.senior_manager_code) from Senior_Manager as sm where sm.company_code=c.company_code group by sm.company_code ) SMCNT, 
+(select count(distinct m.manager_code) from Manager as m where m.company_code=c.company_code group by m.company_code ) MCNT, 
+(select count(distinct e.employee_code) from Employee  as e where e.company_code=c.company_code group by e.company_code ) ECNT 
+from Company as c order by c.company_code
